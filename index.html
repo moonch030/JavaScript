@@ -2,17 +2,43 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">    
-  <title>CSS Class</title>  
-  <link rel="stylesheet" href="style.css">
+  <title>Flex Class</title>  
+  <style>
+    .container-1{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .box-1{
+      flex:1;
+    }
+
+    .box-2{
+      flex:2;
+    }
+
+    .box-3{
+      flex:1;
+    }
+  </style>
 </head>
 <body>  
-  <h1>CSS</h1>  
-  <!-- ul>li*4-->
-  <ul>
-    <li>list1</li>
-    <li>list2</li>
-    <li>list3</li>
-    <li>list4</li>
-  </ul>
+
+  <div class="container-1">
+    <div class="box-1">
+      <h3>Box1</h3>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio, aliquid.</p>
+    </div>
+    <div class="box-2">
+      <h3>Box2</h3>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio, aliquid.</p>
+    </div>
+    <div class="box-3">
+      <h3>Box3</h3>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio, aliquid.</p>
+    </div>
+  </div>
+  
 </body>
 </html>
