@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    border :3px solid red;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    line-height: 200px; 
+    border-radius: 15px;
+  }
+  
+  li {
+    font-size: 24px;
+    border: 1px solid #333;
+    float: left;
+  }
+  
+  ul {
+    list-style: none;
+  }
