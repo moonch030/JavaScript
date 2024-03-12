@@ -2,43 +2,38 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">    
-  <title>Flex Class</title>  
-  <style>
-    .container-1{
+  <title>Flex Class</title>      
+  <style> 
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    header {
+      background: #3955bb;
+      color: #fff;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      padding: 0px 15px; 
+      align-items: center; 
     }
-    
-    .box-1{
-      flex:1;
+    ul {
+      display: flex;
     }
-
-    .box-2{
-      flex:2;
-    }
-
-    .box-3{
-      flex:1;
-    }
+    li {
+      margin-left: 15px;
+    }    
   </style>
 </head>
 <body>  
-
-  <div class="container-1">
-    <div class="box-1">
-      <h3>Box1</h3>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio, aliquid.</p>
-    </div>
-    <div class="box-2">
-      <h3>Box2</h3>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio, aliquid.</p>
-    </div>
-    <div class="box-3">
-      <h3>Box3</h3>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio, aliquid.</p>
-    </div>
-  </div>
-  
+  <header>
+    <h1>Logo</h1>
+    <ul>
+      <li>메뉴1</li>
+      <li>메뉴2</li>
+      <li>메뉴3</li>
+      <li>메뉴4</li>
+    </ul>
+  </header>  
 </body>
 </html>
