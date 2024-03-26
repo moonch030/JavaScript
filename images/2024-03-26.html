@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //return을 안주면 자동으로 undefined
+        function a(){
+            console.log(10);
+            return undefined;
+        }
+        a();
+
+        function b(){
+            console.log("return 실행 전");
+            return;
+            console.log("return 실행 후");
+        }
+        b();
+
+        function c(){
+            for(let i=0; i<5; i++){
+                if(i>=3){
+                    return console.log(i);
+                }
+            }
+        }
+        c();
+
+        //매개변수
+        function d(e,f,g,h){
+            console.log(e,f,g,h)
+        }
+        d(1,2,3,4);
+
+        //함수 안에 변수 선언
+        function minus1(x,y){
+            const a = 100;
+            return console.log((x-y)*a);
+        }
+        minus1(5,3);
+
+        //함수 밖에 변수 선언
+        const exam = 100;
+        function minus2(x,y){
+            return console.log((x-y)*exam);
+        }
+        minus2(5,3);
+
+        //2.6고차함수 (중요) : 함수를 만드는 함수 / 함수 호출을 반환값으로 대체
+        const func = () =>{
+            return () => {
+                console.log('abc');
+            };
+        };
+        const innerFunc = func();
+        innerFunc(); 
+
+        const msg = "안녕"
+        const func1 = (msg) =>{
+            return() => {
+                console.log(msg);
+            }
+        }
+        const innerFunc1 =func1();
+        innerFunc1();
+
+        // const name="문채현"
+        // const year=2002
+        // const gender ="W"
+
+        //JSON 형식 객체
+        const human={
+            name:"문채현",
+            year:2002,
+            gender:"W"
+        }
+        console.log(human)
+        console.log(human.name);
+        console.log(human['year']); //이런식도 가능
+        console.log(human.gender);
+        console.log(human.birth); //undefined
+
+        //이런식도 가능  / 변수 이름이 속성 이름, 변수 값이 속성 값
+        const name="문채현"
+        const year=2002
+        const human1 = {name,year};
+        console.log(human1);
+
+        
+    </script>
+</body>
+</html>
