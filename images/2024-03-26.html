@@ -139,12 +139,18 @@
         const deep = JSON.stringify(array);
         console.log(deep);
         
-        console.log(array==deep);
+        console.log(array==deep); //false
 
         //순서 바꾸어 배열 선언
         const [own,two,three] = array;
         console.log(two);
 
+        //배열 함수 //값,index번호
+        array.forEach((n,i) =>{
+            console.log(n,i);
+        })
+
+        
     </script>
 </body>
 </html>
