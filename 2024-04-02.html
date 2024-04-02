@@ -109,7 +109,177 @@
                 this.hp = maxHp;
             }
         }
+
+
+        //연습 문제(빅포레스트 과제)
+        //1번
+        const multiply = (x, y, z) => x * y * z;
+        console.log(multiply(3,2,3))
+
+        //2번
+        const hof = (a) => (b) => (c) => {
+            return a+(b*c);
+        };
+        const first = hof(3);
+        const second = first(4);
+        const third = second(5);
+        console.log(third);
+
+        //3번
+        const zerocho = {
+            name:{
+                first:'문',
+                last:'채현',
+            },
+                gender:'W',
+            };
+        console.log(zerocho);
+        zerocho.name.first = '김';
+        console.log(zerocho);
+
+        //4번
+        const a = {
+            name: '강아지',
+        };
+
+        const b = a;
+        const c = b;
+        b.name = "고양이"
+        console.log(b);
+        console.log(c);
+
+        //5번
+        const a = 'b';
+        const d = ['d',true,1];
+        const e = {g: 'h'};
+        const i = [{J: 'k'},{l:'m'}];
+        const n = {o:{p: 'q'}};
+
+        const aCopy = a;
+        const dCopy = JSON.parse(JSON.stringify(d));
+        const eCopy = JSON.parse(JSON.stringify(e));
+        const iCopy = JSON.parse(JSON.stringify(i));
+        const nCopy = JSON.parse(JSON.stringify(n));
+
+        console.log(a, aCopy)
+        console.log(d, dCopy)
+        console.log(e, eCopy)
+        console.log(i, iCopy)
+        console.log(n, nCopy)
+
+        //6번
+        const obj = {
+        a:'hello',
+        b:{
+            cc:'hi',
+            d: {ee:'wow'},
+        },
+        };
+
+        const { a, b: { cc, d: { ee } } } = obj;
+
+        console.log(a);
+        console.log(cc);
+        console.log(ee);
+
+        //7번
+        const array = [1,3,5,7];
+        array.forEach((number, index) => {
+            
+        });
+
+        for (let index = 0; index < array.length; index++) {
+            const number = array[index];
+            console.log(number, index);
+        }
+
+        //8번
+        const find = (array, callback) => {
+        for (let i = 0; i < array.length; i++) {
+            if (callback(array[i], i)) {
+            return array[i];
+            }
+        }
+        };
+
+        const result = find([1, 3, 5, 7], (v, i) => v > 1);
+        console.log(result);
+
+        //9번
+        const filter = (array, callback) => {
+        const result = []; // 조건을 만족하는 요소를 담을 새 배열
+        for (let i = 0; i < array.length; i++) {
+            if (callback(array[i], i)) {
+            result.push(array[i]); // 조건을 만족하면 result 배열에 추가
+            }
+        }
+        return result; // 조건을 만족하는 모든 요소를 담은 배열 반환
+        };
+
+        const results = filter([1, 3, 5, 7], (v, i) => v > 1);
+        console.log(results); // [3, 5, 7]
+
+        //10번
+        [1,2,3,4,5].reduce((a,c)=>{
+            a[c] = c *10;
+            return a;
+        },{});
+
+        //11번
+        const array1 = [null, 'hello', null, undefined, false];
+
+        const result1 = array1.some(element => element !== null);
+        console.log(result1); // true
+
+        //12번
+        const array2 = [null, 'hello', null, undefined, false];
+        let result2 = false; // 기본적으로 false로 시작
+
+        for (let i = 0; i < array2.length; i++) {
+        if (array2[i] !== null) { // 현재 요소가 null이 아니면
+            result2 = true; // true로 설정하고
+            break; // 루프를 종료
+        }
+        }
+
+        console.log(result); // true
+
+        //13번
+        class Human {
+        constructor(name, age) {
+            this.name = name;
+            this.age = age;
+        }
         
+        sayName() {
+            console.log(this.name);
+        }
+
+        sayAge() {
+            console.log(this.age);
+        }
+        }
+
+
+        class Developer extends Human {
+        constructor(name, age, availableLanguages) {
+            super(name, age); // 부모 클래스의 constructor 호출
+            this.availableLanguages = availableLanguages; // 코딩 가능한 언어 추가
+        }
+
+        showAvailableLanguages() {
+            console.log(`I can code in: ${this.availableLanguages.join(', ')}`);
+        }
+        }
+
+        // Developer 클래스의 인스턴스 생성
+        const dev = new Developer('Moon', 23, ['HTML', 'CSS', 'JavaScript']);
+
+        // 메서드 호출하여 확인
+        dev.sayName(); // 부모 클래스 메서드 호출
+        dev.sayAge();  // 부모 클래스 메서드 호출
+        dev.showAvailableLanguages(); // "I can code in: HTML, CSS, JavaScript"
+
     </script>
 </body>
 </html>
