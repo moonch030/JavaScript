@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function moneyCollector(str){
+            let answer = '찾을 수 없음';
+            for(let i=0; i<str.length; i++){
+                if(str[i] === '$')
+                answer=i;
+            }
+            return answer;
+        }
+        console(moneyCollector("이 물건은 5$ 입니다."))
+        console(moneyCollector("이 물건은 5000원 입니다."))
+    </script>
+</body>
+</html>
