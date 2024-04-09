@@ -5,18 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <script>
-        function moneyCollector(str){
-            let answer = '찾을 수 없음';
-            for(let i=0; i<str.length; i++){
-                if(str[i] === '$')
-                answer=i;
-            }
-            return answer;
+<script>
+    function even(num){
+        if(num < 0)
+            num = -num;
+        let answer = true;
+        for(let i=0; i>=0; i=i-2){
+            if(i === 1)
+                answer = false //홀수
         }
-        console(moneyCollector("이 물건은 5$ 입니다."))
-        console(moneyCollector("이 물건은 5000원 입니다."))
-    </script>
+        return answer;
+    }
+
+    console.log(even(2))
+    console.log(even(3))
+
+    // 2
+    function idxString(num){
+        let isPositive = true;
+        if(num<0){
+            num = -num;
+            isPositive = false; //음수
+        }
+        let answer ='0';
+        for(let i=1; i<=num; i++){
+            answer = answer + i
+        }
+    }
+    console.log(idxString(9))
+    console.log(idxString(-2))
+
+    //3
+    function fac(num){
+        let result = 1;
+        for(let i=1; i<=num; i++){
+            result = result*i;
+        }
+        return result;
+    }
+    console.log(fac(8))
+
+    //4
+    function penta(num){
+        let answer='';
+        for(let i=5;i<=num;i=i+5){
+            answer=answer+i;
+        }
+        return answer;
+    }
+    console.log(penta(10))
+
+    //5
+    
+
+</script>
+<body>
 </body>
 </html>
