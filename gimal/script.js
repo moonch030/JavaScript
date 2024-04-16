@@ -155,5 +155,53 @@ async function logItems(){
 }
 
 function fetchUser(){
-    //사용자 정보 가져오는 비동기 함수(시간 걸림)
+    return new Promise((resolve, reject) => {
+        //사용자 정보 가져오는 비동기 함수(시간 걸림)
+        resolve('moon')
+    })
 }
+const user = fetchUser()
+user.then((user) => {
+    console.log(user)
+})
+
+function delay(ms){
+    return new Promise((resolve) => {
+        setTimeout(resolve,ms)
+    })
+}
+
+// async function getApple(){
+//     await delay(1000)
+//     return 'apple'
+// }
+function getApple(){
+    return delay(1000)
+    .then(() => 'apple')
+}
+function getBanana(){
+    return delay(1000)
+    .then(() => 'banana')
+}
+async function pickFruits(){
+    // const apple = await getApple();
+    // const banana = await getBanana();
+
+    const applePromise = getApple();
+    const bananaPromise = getBanana();
+
+    const apple = await applePromise;
+    const banana = await bananaPromise;
+    return `${apple} + ${banana}`
+
+    // return getApple()
+    // .then(apple => {
+    //     return getBanana()
+    //     .then(banana => `${apple} + ${banana}`)
+    // })
+}
+function pickFruits(){
+    return Promise.all([getApple(), getBanana()])
+    .then(fruits => fruits.join('+'))
+}
+pickFruits().then(console.log)
