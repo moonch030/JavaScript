@@ -81,7 +81,7 @@
         for(let j = 1; j<=9; j++){
             let result = i*j
             if(result % 2 === 0){
-                continue
+                continue //다시 바로 위 for문으로 돌아가라...길 잘못 찾았소
             }
             console.log(i + " * " + j + " = "+ result)
         }
@@ -102,9 +102,9 @@
 
     //10번
     let arr2 = ['가','라','다','라','마','라']
-    while(arr2.indexOf('라')!== -1){
+    while(arr2.indexOf('라')!== -1){ //'라'가 -1을 반환할때까지
         let index = arr2.indexOf('라');
-        arr2.splice(index,1);
+        arr2.splice(index,1);//(제거 할 인덱스, 요소 수)
     }
     console.log(arr2)
     console.log("----------------------")
@@ -172,11 +172,11 @@
     console.log("----------------------")
 
     //17번 
-    const a2 = a;
-    const c2 = c.slice();
-    const e2 = [...e];
-    const i2 = JSON.parse(stringify(i)) //문자열을 바꾼 걸 복사
-    const n2 = JSON.parse(stringify(i))
+    const a2 = a2;
+    const c2 = c2.slice();
+    const e2 = {...e2};
+    const i2 = JSON.parse(stringify(i2)) //문자열을 바꾼 걸 복사
+    const n2 = JSON.parse(stringify(n2))
 
 
     //18번 구조분해 할당
