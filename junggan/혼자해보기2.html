@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    //1번
+    console.log('1번====================================')
+    let str1 = "문자열이 긴 경우에는 "+"문자열을 "+"나눈 뒤 "+"다시 합칩니다.";
+    console.log(str1)
+
+    //2번
+    console.log('2번====================================')
+    console.log(3**(2+1))
+
+    //3번
+    console.log('3번====================================')
+    console.log(5+4*3!==27)
+
+    //4번
+    console.log('4번====================================')
+    console.log(1&&0) //첫번째 값이 참이면 두번째 값을 반환
+    console.log(0||1) //첫번째 값이 거짓이면 두번째 값을 반환
+    console.log(0??1) //첫번째 피연산자가 null 이나 undefined일 경우만 두번째 피연산자 반환
+    console.log(1||0) //첫번째 값이 거짓이면 두번째 값을 반환
+    console.log(1??0) //첫번째 피연산자가 null 이나 undefined일 경우만 두번째 피연산자 반환
+
+    //5번
+    console.log('5번====================================')
+    let a=3;
+    let b=4
+    let c=a; //c=3
+    a = b //4
+    b = c //3
+    console.log(a,b)
+
+    //6번
+    console.log('6번====================================')
+    let cond = true
+    let value = '';
+    console.log("--if 문--")
+    if(cond){
+        value ='참';
+    }else {
+        value = '거짓';
+    }
+
+    console.log("--switch 문--")
+    switch(cond){
+        case true:
+            value='참'
+            console.log(value);
+            break;
+        case false:
+            value='거짓'
+            console.log(value);
+            break;
+    }
+
+    console.log("--조건부 연산자--")
+    value=cond?'참':'거짓';
+    console.log(value);
+
+    //7번
+    console.log('7번====================================')
+    console.log("--while문--")
+    let i=1;
+    while(i<=10){
+        console.log(i)
+        i++
+    }
+
+    console.log("for문")
+    for(i=1;i<=10;i++){
+        console.log(i)
+    }
+    
+
+    //8번
+    console.log('8번====================================')
+    for(i=1;i<=9;i++){
+        console.log(i+" 단")
+        for(let j=1;j<=9;j++){
+            let result = i*j;
+            if(result%2!=0){
+                console.log(i+" X "+j+" = "+ result)
+            }
+        }
+    }
+
+    //9번   
+    console.log('9번====================================')
+    let arr1 = [1,3,5,7]
+    let third = arr1.splice(-3);
+    let frist = third[0]
+    console.log(frist)
+
+    //10번  
+    console.log('10번====================================')
+    let arr2 = ['가','라','다','라','마','라']
+    while(arr2.indexOf('라')!==-1){
+        let index = arr2.indexOf('라');
+        arr2.splice(index,1);
+    }
+    console.log(arr2)
+
+    //11번
+    console.log('11번====================================')
+    let arr3 = [
+        ['a',null],
+        [1,undefined],
+        [NaN,true],
+        ['',0]
+    ]
+    console.log(arr3)
+
+    //12번
+    console.log('12번====================================')
+    let arr4 = [];
+    for(i=0;i<=4;i++){
+        arr4[i] = [];
+        for(j=0;j<=3;j++){
+            arr4[i][j]=1;
+        }
+    }
+    console.log(arr4)
+
+    //13번
+    console.log('13번====================================')
+    const multiply = (x,y,z) =>{
+        return x*y*z
+    }
+    console.log(multiply(3,3,3))
+
+    //14번
+    console.log('14번====================================')
+    const hof = (a) => (b) => (c) =>{
+        return a+(b*c);
+    };
+    const first = hof(3);
+    const second = first(4);
+    const third1 = second(5);
+    console.log(third1)
+
+    //15번
+    console.log('15번====================================')
+    const zerocho ={
+        name:{
+            first:'현영',
+            last:'조',
+        },
+        gender:'m',
+    }
+    zerocho.name.last='김'
+    console.log(zerocho.name.last)
+
+    //16번
+    console.log('16번====================================')
+    const a1 = {
+        name: '강아지',
+    };
+    a1.name='고양이'
+    const b1 = a1;
+    const c1 = b1;
+    console.log(b1)
+    console.log(c1)
+
+    //17번
+    console.log('17번====================================')
+    console.log("--원본--")
+    const a2 = 'b';
+    const c2 = ['d', true, 1];
+    const e2 = {g: 'h'};
+    const i2 = [{j: 'k'}, {1: 'm'}];
+    const n2 = {o: {q: 'q'}};
+
+    console.log("--복사본--")
+    const a3 = a2;
+    const c3 = c2.slice();
+    const e3 = JSON.parse(JSON.stringify(e2))
+    const i3 = JSON.parse(JSON.stringify(i2)); // 깊은 복사
+    const n3 = JSON.parse(JSON.stringify(n2)); // 깊은 복사
+    
+    console.log("--복사본 값 변경--")
+    c3[0] = 'z';  // 배열 c2의 복사본 c3의 첫 번째 요소 변경
+    e3.g = 'i';   // 객체 e2의 복사본 e3의 'g' 속성 변경
+    i3[0].j = 'x';  // 배열 내 객체의 깊은 복사본 수정
+    n3.o.q = 'r';   // 중첩 객체의 깊은 복사본 수정
+    
+    console.log("--복사 값 변경 후 출력--");
+    console.log(c3);  // ['z', true, 1]
+    console.log(e3);  // {g: 'i'}
+    console.log(i3);  // [{j: 'x'}, {1: 'm'}]
+    console.log(n3);  // {o: {q: 'r'}}
+
+    console.log("--원본 값 재확인 (변경 검증)--");
+    console.log(c2); // ['d', true, 1]
+    console.log(e2); // {g: 'h'}
+    console.log(i2); // [{j: 'k'}, {1: 'm'}]
+    console.log(n2); // {o: {q: 'q'}}
+
+    //18번
+    console.log('18번====================================')
+    const obj = {
+        a:'hello',
+        b:{
+            c:'hi',
+            d:{e:'wow'},
+        },
+    };
+
+    const obj2 = {a:'hello',b:{c:'hi',d:{e:'wow'}}}
+    console.log(obj2)
+
+    //19번
+    console.log('19번====================================')
+    const array = [1,3,5,7];
+    console.log("--forEach문--")
+    array.forEach((number,index) => {
+        console.log(number,index)
+    })
+    console.log("--for문--")
+    for(i=0;i<=array.length-1;i++){
+        console.log(array[i],i)
+    }
+    
+    //20번
+
+    //21번
+    console.log('21번====================================')
+    const find = (array, callback) => {
+        for(i=0; i<=array.length; i++){
+            if(callback(array[i])){
+                return array[i]
+            }
+        }
+        return undefined
+    };
+    const result = find([1, 3, 5, 7], (v) => v > 1);
+    console.log(result); // 출력: 3
+    
+    //22번
+    console.log('22번====================================')
+    const filter = (array, callback) => {
+        const result = [];
+        for(i=0;i<array.length;i++){
+            if(callback(array[i])){
+                result.push(array[i]);
+            }
+        }
+        return result;
+    };
+        const results = filter([1, 3, 5, 7], (v, i) => v > 1);
+        console.log(results); // [3, 5, 7]
+
+    
+    //23번
+    console.log('23번====================================')
+    const result3 = [1,2,3,4,5].reduce((a4, c4) => {
+        a4[c4] = c4 * 10; //c4*10 결과를 a4객체의 키 c4에 할당
+        return a4;
+    }, {});
+    //a4는 누적값 , c4는 현재값
+    console.log(result3);
+
+    //24번
+
+    //25번
+
+    //26번
+    console.log('26번====================================')
+    class Human{
+        constructor(name,age){
+            this.name=name;
+            this.age=age;
+        }
+
+        sayName(){
+            console.log(this.name)
+        }
+
+        sayAge(){
+            console.log(this.age)
+        }
+    }
+
+    const human = new Human('문채현',23)
+    human.sayAge()
+    human.sayName();
+
+    class Developer extends Human{
+        constructor(name,age,avail){
+            super(name,age)
+            this.avail=avail;
+        }
+
+        show(){
+            console.log(`난 ${this.avail} 잘한다`)
+        }
+    }
+
+    const dev = new Developer('문채현2',233,['먹기','자기','술먹기'])
+    dev.show();
+    dev.sayAge;
+    dev.sayName();
+    </script>
+<body>
+    
+</body>
+</html>

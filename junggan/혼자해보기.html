@@ -270,6 +270,71 @@
 
         const results = filter([1, 3, 5, 7], (v, i) => v > 1);
         console.log(results); // [3, 5, 7]
+    console.log("======================")
+
+
+    //23번
+    const result3 = [1,2,3,4,5].reduce((a4, c4) => {
+        a4[c4] = c4 * 10; //c4*10 결과를 a4객체의 키 c4에 할당
+        return a4;
+    }, {});
+    //a4는 누적값 , c4는 현재값
+    console.log(result3);
+    console.log("======================")
+
+    //24번 배열 null이 아니면 true, 아니면 false
+    const array1 = [null, 'hello', null, undefined, false];
+    const result1 = array1.some(element => element !== null);
+    console.log(result1)
+    console.log("======================")
+
+    //25번
+    let result4 = false;
+
+    for(let i=0; i<array1.length;i++){
+        if(array[i] !== null){
+            result4 = true;
+            break;
+        }
+    }
+    console.log(result4)
+    console.log("======================")
+
+    //26~27번
+    class Human{
+        constructor(name,age){
+            this.name=name;
+            this.age=age;
+        }
+        
+        sayName(){
+            console.log(this.name)
+        }
+
+        sayAge(){
+            console.log(this.age)
+        }
+    }
+
+    class Developer extends Human{
+        constructor(name,age,avail){
+            super(name,age)
+            this.avail = avail
+        }
+
+        languages(){
+            console.log(`난 ${this.avail.join(', ')}할 줄 알아 머시찌? 우헤헤`);
+        }
+    }
+
+    //developer 인스턴스 생성
+    const dev = new Developer('문채현',23,['JAVA','JSP','SPRINGBOOT']);
+
+    //메서드 호출
+    dev.sayName();
+    dev.sayAge();
+    dev.languages();
+    console.log("======================")
 
     </script>
 <body>
