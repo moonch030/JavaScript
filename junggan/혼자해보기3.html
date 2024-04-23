@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    class Human{
+        constructor(name,age){
+            this.name=name
+            this.age=age
+        }
+
+        sayName(){
+            console.log(this.name)
+        }
+
+        sayAge(){
+            console.log(this.age)
+        }
+    }
+
+    class Developer extends Human{
+        constructor(name,age,avail){
+            super(name,age)
+            this.avail=avail
+        }
+
+        showAvail(){
+            console.log(`안녕 난 ${this.avail}`)
+        }
+    }
+
+    const dev = new Developer("문채현",23,["먀먀ㅑㅁ먀","냐냐냐냐"])
+    dev.sayAge()
+    dev.sayName()
+    dev.showAvail();
+</script>
+<body>   
+</body>
+</html>

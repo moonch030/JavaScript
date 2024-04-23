@@ -227,6 +227,11 @@
     }
     
     //20번
+    console.log('20번====================================')
+    const arr5 = Array(5)
+    .fill() //값 지정해주지 않으면 undefined로 지정됨
+    .map((v,i)=>i*2+3)
+    console.log(arr5)
 
     //21번
     console.log('21번====================================')
@@ -265,10 +270,24 @@
     //a4는 누적값 , c4는 현재값
     console.log(result3);
 
-    //24번
+    //24번 null이 아닌 요소가 있는지를 확인
+    console.log('24번====================================')
+    const array1 = [null, 'hello', null, undefined, false];
+    const result1 = array1.some(element => element !== null);
+    console.log(result1)
 
     //25번
+    console.log('25번====================================')
+    let result4 = false;
 
+    for(let i=0; i<array1.length;i++){
+        if(array[i] !== null){
+            result4 = true;
+            break;
+        }
+    }
+    console.log(result4)
+    
     //26번
     console.log('26번====================================')
     class Human{
@@ -301,9 +320,9 @@
         }
     }
 
-    const dev = new Developer('문채현2',233,['먹기','자기','술먹기'])
+    const dev = new Developer('문채현e2',23,['먹기','자기','술먹기'])
     dev.show();
-    dev.sayAge;
+    dev.sayAge();
     dev.sayName();
     </script>
 <body>

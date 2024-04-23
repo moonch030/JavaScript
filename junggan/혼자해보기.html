@@ -175,9 +175,8 @@
     const a3 = a2;
     const c3 = c2.slice();
     const e3 = {...e2};
-    const i3 = JSON.parse(JSON.stringify(i2)); // 깊은 복사
-    const n3 = JSON.parse(JSON.stringify(n2)); // 깊은 복사
-
+    const i3 = JSON.parse(JSON.stringify(i2))
+    const n3 = JSON.parse(JSON.stringify(n2))
     // 원본 값 출력
     console.log("원본 값 출력:");
     console.log(a2); // 'b'
@@ -237,9 +236,7 @@
     console.log("======================")
 
     //20번
-    const arr4 = Array(5) // 길이가 5인 배열 생성
-		.fill()		// [0, 0, 0, 0, 0]
-		.map((v, i) => i * 2 + 3); //index * 2 + 3
+    const arr4 = Array(5).fill().map((v,i)=>i*2+3)
     console.log(arr4)
     console.log("======================")
 
