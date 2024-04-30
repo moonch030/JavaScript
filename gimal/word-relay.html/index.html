@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>끝말잇기</title>
+</head>
+<body>
+    <span>임시</span>
+    <div><span id="order">1</span>번째 참가자</div>
+    <div>제시어:<span id="word"></span></div>
+    <input type="text">
+    <button class="btn">입력</button>
+    <button class="btn">처리</button>
+    <button class="btn">출력</button>
+    <script>
+        // id,태그 가져오는 방법
+        // const $order = document.querySelector('#order'); //태그,id를 가져올 수 있음, id는 앞에 #
+        // //html요소에 접근할 때 $사용
+        // //querySelector는 첫번째 요소만 가져올 수 있음
+        // //querySelectorAll을 사용하면 모두 가져옴
+        // console.log($order)
+
+        // class 가져오는 방법
+        // const $$buttons = document.querySelectorAll('.btn'); //class 가져오기
+        // console.log($$buttons)
+
+        // 여러 태그가 있을 때 부모 자식 요소 사용
+        // const $span = document.querySelector('div span') //부모 자식 요소 , 지정한 span태그 접근
+        // console.log($span)
+
+        // 첫번째 요소가 가지고 있는 text값 가지고 오는 방법 textContent
+        // const $order = document.querySelector('#order')
+        // console.log($order.textContent)
+        // const $div = document.querySelector('div')
+        // console.log($div.textContent)
+
+        // 위와 동일 innerHTML
+        // const $order = document.querySelector('#order')
+        // console.log($order.innerHTML)
+        // const $div = document.querySelector('div')
+        // console.log($div.innerHTML)
+
+        // // 요소 지우기
+        // const $div = document.querySelector('div');
+        // $div.innerHTML = '';
+        // console.log($div);
+
+        // //버튼 요소 굵게
+        // const $button = document.querySelector('button');
+        // $button.innerHTML = '<b>굵게</b>'
+
+        // const $input = document.querySelector('input')
+        // console.log($input.value);
+        // //textarea, select는 value를 씀
+        // $input.value = 123;
+        // $input.focus();
+
+        //button을 클릭했을 때
+        // const onClickButton = () => {
+        //     console.log('버튼 클릭!!!!');
+        // }
+        //익명 함수로도 가능
+        // const $button = document.querySelector('button');
+        // $button.addEventListener('click',() => {
+        //     console.log("버튼 클릭!!!!!")
+        // });
+
+        // //input태그에 값을 입력 했을 때
+        // const $input = document.querySelector('input')
+        // const onInput = (event) => {
+        //     console.log('글자 입력', event.target.value);
+        // }
+        // $input.addEventListener('input',onInput)
+        // $input.removeEventListener('input',onInput)
+
+        //이벤트 리스너
+        //키보드를 입력할 때
+        // window.addEventListener('kdyup',(event) => {
+        //     console.log('keyup', event);
+        // })
+        // window.addEventListener('keydown',(event) => {
+        //     console.log('keydown',event)
+        // })
+
+        // //마우스를 클릭 했을 때 (드래그, 클릭)
+        // window.addEventListener('mousedown',(evnet) => { //클릭 누른 상태
+        //     console.log('mousedown', evnet)
+        // })
+        // window.addEventListener('mouseup',(evnet) => { //클릭 하고 난 상태
+        //     console.log('mouseup', evnet)
+        // })
+        // window.addEventListener('mousemove',(evnet) => { //마우스 위치
+        //     console.log('mousemove', evnet)
+        // })
+
+        let start; //마우스를 클릭 했을 때 시작 지점
+        window.addEventListener('mousedown',(event) => {
+            start = [event.clientX, event.clientY];
+        })
+        window.addEventListener('mouseup', (event) => {
+            const end = [event.clientX, event.clientY]
+            const diffx = end[0] - start[0]
+            const diffy = end[1] - start[1]
+
+            const isUnder45 = Math.abs(diffx) > Math.abs(diffy)
+
+            if(diffx < 0 && isUnder45) {
+                console.log('왼쪽')
+            } else if(diffx > 0 && isUnder45) {
+                console.log('오른쪽')
+            } else if(diffy > 0 && !isUnder45) {
+                console.log('아래쪽')
+            } else if(diffy < 0 && !isUnder45) {
+                console.log('왼쪽')
+            }
+        })
+
+        //버튼 위에서 우클릭
+        const $button = document.querySelector('button');
+        $button.addEventListener('contextmenu', (evnet) => {
+            event.preventDefault(); //contextmenu를 안뜨게 하는 방법
+            console.log('우클릭')
+        });
+    </script>
+</body>
+</html>
