@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>문채현 자기소개 웹페이지</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>나의 자기소개</h1>
+    </header>
+    <div>
+        <h2 class="introduce-to">제 소개를 할게요!</h2>
+        <p><strong>이름:</strong> 문채현</p>
+        <p><strong>나이:</strong> 23세</p>
+        <p><strong>생년월일:</strong> <input type="date" id="birthdate" name="birthdate"></p>
+        <p><img class="profile-photo" src="문채현.jpg" alt="내사진"></p>
+    </div>
+
+    <br>
+
+    <div>
+        <h2>내 취미</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>취미</th>
+                    <th>설명</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>게임</td>
+                    <td>친구들과 함께 리그오브레전드 컴퓨터 게임을 즐깁니다!</td>
+                </tr>
+                <tr>
+                    <td>청소</td>
+                    <td>매일 방 청소를 합니다!</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+
+    <div>
+        <h2 class="chicken-preference">내가 치킨을 좋아하는 정도</h2>
+        <label for="progress">이만큼 좋아해요</label>
+        <progress id="progress" value="90" max="100"></progress>
+    </div>
+
+    <br>
+
+    <div>
+        <h2>좋아하는 것들</h2>
+        <ul>
+            <li><strong>좋아하는 예능: </strong> <a href="https://www.youtube.com/watch?v=H1VW-AmG5UE" target="_blank">무한도전</a></li>
+            <li><strong>좋아하는 노래: </strong>뉴진스 하입보이</li>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/11cta61wi0g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </ul>
+    </div>
+
+    <br>
+
+    <div class="image-container">
+        <div>
+            <p><strong>좋아하는 아이돌:</strong></p>
+            <img src="하니.jpg" alt="아이돌 사진">
+        </div>
+        <div>
+            <p><strong>취미 활동 사진:</strong></p>
+            <img src="취미.webp" alt="취미 사진">
+        </div>
+    </div><br><br>
+</body>
+</html>

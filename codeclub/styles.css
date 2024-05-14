@@ -1,0 +1,65 @@
+/* 기본적인 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0; /* 브라우저의 기본 여백 제거 */
+    min-height: 100vh; /* 화면 전체 높이를 채우도록 설정 */
+    position: relative; /* body의 높이를 활용해 footer를 하단에 고정 */
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* "제 소개를 할게요!" 텍스트 스타일 */
+.introduce-to {
+    color: purple; /* 원하는 색상 */
+    font-weight: bold; /* 글자 굵게 */
+}
+
+/* "내가 치킨을 좋아하는 정도" 텍스트 스타일 */
+.chicken-preference {
+    color: #27AE60; /* 원하는 색상 */
+    font-weight: bold; /* 글자 굵게 */
+}
+
+.profile-photo {
+    max-width: 200px; /* 프로필 사진의 최대 너비를 픽셀로 고정 */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+.image-container {
+    display: flex;
+    justify-content: center; /* 아이템들을 가로로 중앙에 배치 */
+    gap: 20px; /* 이미지들 사이 간격 */
+}
+
+.image-container img {
+    max-width: 300px; /* 이미지의 최대 너비를 픽셀로 고정 */
+    height: auto;
+    display: block;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto; /* 테이블 중앙 정렬 */
+    border-collapse: collapse; /* 테이블 테두리 겹침 방지 */
+}
+
+th, td {
+    border: 1px solid #ddd; /* 셀의 테두리 */
+    padding: 8px;
+}
+
+th {
+    background-color:cornflowerblue; /* 헤더 배경색 */
+}
+
+ul {
+    list-style-type: none; /* 리스트의 기본 점 제거 */
+    padding: 0;
+}
