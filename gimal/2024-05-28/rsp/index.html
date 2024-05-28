@@ -59,11 +59,12 @@
       paper: -1,
     };
     
-    
     let clickable = true;
-    let score = 0;
+    let userWins = 0;
+    let computerWins = 0;
+    const maxWins = 3;
     const clickButton = (event) => { 
-      if (clickable) {
+      if (clickable && userWins < maxWins && computerWins < maxWins) {
         clearInterval(intervalId); 
         clickable = false;
         const myChoice = event.target.textContent === '바위' ? 'rock' 
@@ -73,26 +74,32 @@
         const diff = myScore - computerScore;
         let message;
         if ([2, -1].includes(diff)) {
-          score += 1;
+          userWins += 1;
           message = '승리';
         } else if ([-2, 1].includes(diff)) {
-          score -= 1;
+          computerWins += 1;
           message = '패배';
         } else {
           message = '무승부';
         }
-        $score.textContent = `${message} 총: ${score}점`;
-        setTimeout(() => { 
-          clickable = true;
-          intervalId = setInterval(changeComputerHand, 50);
-        }, 1000);
+        $score.textContent = `${message} | 사용자: ${userWins}승, 컴퓨터: ${computerWins}승`;
+        
+        if (userWins === maxWins) {
+          $score.textContent += ' | 사용자 최종 승리!';
+        } else if (computerWins === maxWins) {
+          $score.textContent += ' | 컴퓨터 최종 승리!';
+        } else {
+          setTimeout(() => { 
+            clickable = true;
+            intervalId = setInterval(changeComputerHand, 50);
+          }, 1000);
+        }
       }
     };
+    
     $rock.addEventListener('click', clickButton);
     $scissors.addEventListener('click', clickButton);
     $paper.addEventListener('click', clickButton);
     </script>
-    
-    
-    </body>
+</body>
 </html>
