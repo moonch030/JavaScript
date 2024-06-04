@@ -28,48 +28,27 @@
     const checkWinner = (target) => { // 승패 판단
         const rowIndex = target.parentNode.rowIndex; // tr의 행 인덱스
         const cellIndex = target.cellIndex; // td의 열 인덱스
-        let hasWinner = false; // 세 칸이 같은 모양으로 채워졌는가? 
+        let hasWinner = false; // 다섯 칸이 같은 모양으로 채워졌는가?
 
-        if ( // 가로줄 검사
-            rows[rowIndex][0].textContent === turn && 
-            rows[rowIndex][1].textContent === turn && 
-            rows[rowIndex][2].textContent === turn
-        ) {
+        // 가로줄 검사
+        if (rows[rowIndex].every(cell => cell.textContent === turn)) {
             hasWinner = true;
         }
 
-        if ( // 세로줄 검사
-            rows[0][cellIndex].textContent === turn && 
-            rows[1][cellIndex].textContent === turn && 
-            rows[2][cellIndex].textContent === turn
-        ) {
+        // 세로줄 검사
+        if (rows.every(row => row[cellIndex].textContent === turn)) {
             hasWinner = true;
         }
 
-        if ( // 대각선 검사 (대각선의 일부인 경우만)
-            (rowIndex === 0 && cellIndex === 0) ||
-            (rowIndex === 1 && cellIndex === 1) ||
-            (rowIndex === 2 && cellIndex === 2)
-        ) {
-            if (
-                rows[0][0].textContent === turn && 
-                rows[1][1].textContent === turn && 
-                rows[2][2].textContent === turn
-            ) {
+        // 대각선 검사
+        if (rowIndex === cellIndex) { // 좌상단-우하단 대각선 검사
+            if (rows.every((row, i) => row[i].textContent === turn)) {
                 hasWinner = true;
             }
         }
 
-        if ( // 대각선 검사 (대각선의 일부인 경우만)
-            (rowIndex === 0 && cellIndex === 2) ||
-            (rowIndex === 1 && cellIndex === 1) ||
-            (rowIndex === 2 && cellIndex === 0)
-        ) {
-            if (
-                rows[0][2].textContent === turn && 
-                rows[1][1].textContent === turn && 
-                rows[2][0].textContent === turn
-            ) {
+        if (rowIndex + cellIndex === 4) { // 우상단-좌하단 대각선 검사
+            if (rows.every((row, i) => row[4 - i].textContent === turn)) {
                 hasWinner = true;
             }
         }
@@ -77,8 +56,32 @@
         return hasWinner;
     };
 
+    const computerTurn = () => {
+        const emptyCells = rows.flat().filter(cell => cell.textContent === '');
+        if (emptyCells.length === 0) return; // 빈 칸이 없으면 종료
+
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        const randomCell = emptyCells[randomIndex];
+        randomCell.textContent = 'X';
+
+        const hasWinner = checkWinner(randomCell);
+        if (hasWinner) {
+            $result.textContent = `X님이 승리!`;
+            $table.removeEventListener('click', callback);
+            return;
+        }
+
+        const draw = rows.flat().every(cell => cell.textContent);
+        if (draw) {
+            $result.textContent = `무승부`; 
+            return;
+        }
+
+        turn = 'O'; // 턴을 O로 변경
+    };
+
     const callback = (event) => {
-        if (event.target.textContent !== '') { // 빈칸이 아닌가? 
+        if (event.target.textContent !== '' || turn === 'X') { // 빈칸이 아닌가? 
             console.log('빈칸이 아닙니다.');
             return;
         }
@@ -96,20 +99,21 @@
         }
 
         // 승자가 없으면 무승부 검사
-        const draw = rows.flat().every((cell) => cell.textContent);
+        const draw = rows.flat().every(cell => cell.textContent);
         if (draw) {
             $result.textContent = `무승부`; 
             return;
         }
 
-        // 턴을 변경
-        turn = turn === 'X' ? 'O' : 'X';
+        // 턴을 X로 변경하고 컴퓨터의 턴 수행
+        turn = 'X';
+        setTimeout(computerTurn, 500); // 0.5초 후 컴퓨터의 턴 실행
     };
 
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 5; i++) {
         const $tr = document.createElement('tr'); 
         const cells = [];
-        for (let j = 1; j <= 3; j++) {
+        for (let j = 1; j <= 5; j++) {
             const $td = document.createElement('td'); 
             cells.push($td);
             $tr.appendChild($td);

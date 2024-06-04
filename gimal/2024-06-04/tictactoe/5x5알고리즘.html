@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>틱택토</title>
+    <style>
+    table {
+        border-collapse: collapse;
+    }
+    td {
+        border: 1px solid black;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        font-size: 24px; /* 가독성을 높이기 위해 글꼴 크기 확대 */
+        cursor: pointer; /* UX를 위해 포인터 커서 추가 */
+    }
+    </style>
+</head>
+<body>    
+    <script>
+    const body = document.body;
+    const $table = document.createElement('table');
+    const $result = document.createElement('div'); // 결과창
+    const rows = []; // 줄 담당 배열
+    let turn = 'O'; // 차례 'O'부터 시작
+
+    const checkWinner = (target) => { // 승패 판단
+        const rowIndex = target.parentNode.rowIndex; // tr의 행 인덱스
+        const cellIndex = target.cellIndex; // td의 열 인덱스
+        let hasWinner = false; // 다섯 칸이 같은 모양으로 채워졌는가?
+
+        // 가로줄 검사
+        if (rows[rowIndex].every(cell => cell.textContent === turn)) {
+            hasWinner = true;
+        }
+
+        // 세로줄 검사
+        if (rows.every(row => row[cellIndex].textContent === turn)) {
+            hasWinner = true;
+        }
+
+        // 대각선 검사
+        if (rowIndex === cellIndex) { // 좌상단-우하단 대각선 검사
+            if (rows.every((row, i) => row[i].textContent === turn)) {
+                hasWinner = true;
+            }
+        }
+
+        if (rowIndex + cellIndex === 4) { // 우상단-좌하단 대각선 검사
+            if (rows.every((row, i) => row[4 - i].textContent === turn)) {
+                hasWinner = true;
+            }
+        }
+
+        return hasWinner;
+    };
+
+    const computerTurn = () => {
+        const emptyCells = rows.flat().filter(cell => cell.textContent === '');
+        if (emptyCells.length === 0) return; // 빈 칸이 없으면 종료
+
+        const findBestMove = (symbol) => {
+            for (let rowIndex = 0; rowIndex < 5; rowIndex++) {
+                for (let cellIndex = 0; cellIndex < 5; cellIndex++) {
+                    if (rows[rowIndex][cellIndex].textContent === '') {
+                        rows[rowIndex][cellIndex].textContent = symbol;
+                        const isWinningMove = checkWinner(rows[rowIndex][cellIndex]);
+                        rows[rowIndex][cellIndex].textContent = '';
+                        if (isWinningMove) {
+                            return rows[rowIndex][cellIndex];
+                        }
+                    }
+                }
+            }
+            return null;
+        };
+
+        // 1. 승리 가능성이 있는 경우 해당 칸 선택
+        let bestMove = findBestMove('X');
+        if (!bestMove) {
+            // 2. 사용자의 승리를 막을 수 있는 경우 해당 칸 선택
+            bestMove = findBestMove('O');
+        }
+        if (!bestMove) {
+            // 3. 그렇지 않으면 무작위로 빈 칸 선택
+            const randomIndex = Math.floor(Math.random() * emptyCells.length);
+            bestMove = emptyCells[randomIndex];
+        }
+
+        bestMove.textContent = 'X';
+
+        const hasWinner = checkWinner(bestMove);
+        if (hasWinner) {
+            $result.textContent = `X님이 승리!`;
+            $table.removeEventListener('click', callback);
+            return;
+        }
+
+        const draw = rows.flat().every(cell => cell.textContent);
+        if (draw) {
+            $result.textContent = `무승부`; 
+            return;
+        }
+
+        turn = 'O'; // 턴을 O로 변경
+    };
+
+    const callback = (event) => {
+        if (event.target.textContent !== '' || turn === 'X') { // 빈칸이 아닌가? 
+            console.log('빈칸이 아닙니다.');
+            return;
+        }
+
+        // 빈칸이면 
+        console.log('빈칸입니다'); 
+        event.target.textContent = turn;
+        const hasWinner = checkWinner(event.target);
+
+        // 승자가 있으면
+        if (hasWinner) {
+            $result.textContent = `${turn}님이 승리!`;
+            $table.removeEventListener('click', callback);
+            return;
+        }
+
+        // 승자가 없으면 무승부 검사
+        const draw = rows.flat().every(cell => cell.textContent);
+        if (draw) {
+            $result.textContent = `무승부`; 
+            return;
+        }
+
+        // 턴을 X로 변경하고 컴퓨터의 턴 수행
+        turn = 'X';
+        setTimeout(computerTurn, 500); // 0.5초 후 컴퓨터의 턴 실행
+    };
+
+    for (let i = 1; i <= 5; i++) {
+        const $tr = document.createElement('tr'); 
+        const cells = [];
+        for (let j = 1; j <= 5; j++) {
+            const $td = document.createElement('td'); 
+            cells.push($td);
+            $tr.appendChild($td);
+        }
+        rows.push(cells);
+        $table.appendChild($tr);
+    }
+
+    // 이벤트 리스너는 루프 밖에서 추가
+    $table.addEventListener('click', callback);
+    body.appendChild($table); 
+    body.appendChild($result);
+    </script>
+</body>
+</html>

@@ -77,8 +77,32 @@
         return hasWinner;
     };
 
+    const computerTurn = () => {
+        const emptyCells = rows.flat().filter(cell => cell.textContent === '');
+        if (emptyCells.length === 0) return; // 빈 칸이 없으면 종료
+
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        const randomCell = emptyCells[randomIndex];
+        randomCell.textContent = 'X';
+
+        const hasWinner = checkWinner(randomCell);
+        if (hasWinner) {
+            $result.textContent = `X님이 승리!`;
+            $table.removeEventListener('click', callback);
+            return;
+        }
+
+        const draw = rows.flat().every(cell => cell.textContent);
+        if (draw) {
+            $result.textContent = `무승부`; 
+            return;
+        }
+
+        turn = 'O'; // 턴을 O로 변경
+    };
+
     const callback = (event) => {
-        if (event.target.textContent !== '') { // 빈칸이 아닌가? 
+        if (event.target.textContent !== '' || turn === 'X') { // 빈칸이 아닌가? 
             console.log('빈칸이 아닙니다.');
             return;
         }
@@ -96,14 +120,15 @@
         }
 
         // 승자가 없으면 무승부 검사
-        const draw = rows.flat().every((cell) => cell.textContent);
+        const draw = rows.flat().every(cell => cell.textContent);
         if (draw) {
             $result.textContent = `무승부`; 
             return;
         }
 
-        // 턴을 변경
-        turn = turn === 'X' ? 'O' : 'X';
+        // 턴을 X로 변경하고 컴퓨터의 턴 수행
+        turn = 'X';
+        setTimeout(computerTurn, 500); // 0.5초 후 컴퓨터의 턴 실행
     };
 
     for (let i = 1; i <= 3; i++) {
