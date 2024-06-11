@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>숫자야구</title>
+    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 웹 디자인을 위한 viewport 설정 -->
+    <title>숫자야구</title> <!-- 웹페이지의 제목을 "숫자야구"로 설정 -->
 </head>
 <body>
-    <form id="form">
-        <input type="text" id="input">
-        <button>확인</button>
+    <form id="form"> <!-- 사용자가 입력할 폼 -->
+        <input type="text" id="input" placeholder="4자리 숫자를 입력하세요"> <!-- 숫자 입력 필드 -->
+        <button>확인</button> <!-- 확인 버튼 -->
     </form>
-    <div id="logs"></div>
+    <div id="logs"></div> <!-- 결과를 출력할 영역 -->
     <script>
+        // DOM 요소를 변수에 저장
         const $input = document.querySelector('#input');
         const $form = document.querySelector('#form');
         const $logs = document.querySelector('#logs');
+
+        // 1부터 9까지의 숫자를 배열에 저장
         const numbers = [];
         for (let n = 1; n <= 9; n += 1) {
           numbers.push(n);
         }
+
+        // 정답 숫자 4개를 랜덤으로 선택
         const answer = [];
-        for (let n = 0; n <= 3; n += 1) {
+        for (let n = 0; n < 4; n += 1) {
           const index = Math.floor(Math.random() * numbers.length);
           answer.push(numbers[index]);
           numbers.splice(index, 1);
         }
-        console.log(answer);
+        console.log(answer); // 디버깅을 위한 정답 출력
 
-        const tries = [];
-        let outCount = 0; // 아웃 카운트 추가
+        const tries = []; // 사용자의 시도 저장
+        let outCount = 0; // 아웃 카운트 초기화
 
+        // 입력값 검사 함수
         function checkInput(input) {
           if (input.length !== 4) {
             return alert('4자리 숫자를 입력하세요.');
@@ -43,15 +49,16 @@
           return true;
         }
 
+        // 폼 제출 시 이벤트 리스너
         $form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          const value = $input.value;
-          $input.value = '';
-          const valid = checkInput(value);
+          event.preventDefault(); // 폼 기본 동작 중단
+          const value = $input.value; // 입력된 값 가져오기
+          $input.value = ''; // 입력 필드 초기화
+          const valid = checkInput(value); // 입력값 유효성 검사
           if (!valid) {
             return;
           }
-          if (answer.join('') === value) {
+          if (answer.join('') === value) { // 정답 체크
             $logs.textContent = '홈런!';
             return;
           }
@@ -60,25 +67,25 @@
             $logs.appendChild(message);
             return;
           }
-          let strike = 0;
-          let ball = 0;
+          let strike = 0; // 스트라이크 카운트 초기화
+          let ball = 0; // 볼 카운트 초기화
           for (let i = 0; i < answer.length; i++) {
             const index = value.indexOf(answer[i]);
-            if (index > -1) {
-              if (index === i) {
+            if (index > -1) { // 숫자가 존재할 경우
+              if (index === i) { // 위치가 같으면 스트라이크
                 strike += 1;
-              } else {
+              } else { // 위치가 다르면 볼
                 ball += 1;
               }
             }
           }
-          if (strike === 0 && ball === 0) {
+          if (strike === 0 && ball === 0) { // 스트라이크와 볼이 모두 없는 경우
             $logs.append(`${value}: 아웃`, document.createElement('br'));
             outCount += 1; // 아웃 카운트 증가
           } else {
             $logs.append(`${value}: ${strike} 스트라이크 ${ball} 볼`, document.createElement('br'));
           }
-          tries.push(value);
+          tries.push(value); // 시도한 값을 배열에 추가
         });
     </script>
 </body>

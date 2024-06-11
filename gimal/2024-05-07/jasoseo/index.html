@@ -21,13 +21,18 @@
   <span id="count">(0/200)</span>
   <script>
     function counter() {
+      // 'jasoseo' ID를 가진 텍스트 영역의 값을 가져옴
       var content = document.getElementById("jasoseo").value;
+      // 내용이 200자를 초과하면 200자로 잘라냄
       if (content.length > 200) {
         content = content.substring(0, 200);
+        // 잘린 내용을 다시 텍스트 영역에 설정
         document.getElementById('jasoseo').value = content;
       }
+      // 현재 글자 수를 표시
       document.getElementById("count").innerHTML = '(' + content.length + '/200)';
     }
+    // 페이지가 로드될 때 counter() 함수를 실행하여 초기 글자 수를 표시
     counter();    
   </script>
 </body>

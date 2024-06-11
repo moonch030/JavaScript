@@ -38,12 +38,17 @@
         <button id="multiply">x</button>
     </div>
     <script>
+        // 계산기의 현재 입력값을 저장하는 변수
         let currentInput = ''; 
+        // 이전 계산 결과를 저장하는 변수
         let previousResult = 0; 
+        // 현재 연산자를 저장하는 변수
         let currentOperator = null; 
+        // 연산자와 결과를 표시하는 DOM 요소들을 가져옴
         const $operator = document.querySelector('#operator'); 
         const $result = document.querySelector('#result');
 
+        // 계산을 수행하는 함수
         const calculate = () => {
             let numTwo = parseFloat(currentInput);
             switch (currentOperator) {
@@ -64,18 +69,21 @@
             }
         };
 
+        // 숫자 버튼 클릭 시 호출되는 함수
         const onClickNumber = (event) => {
             currentInput += event.target.textContent;
             $result.value = currentInput;
         };
 
+        // 모든 숫자 버튼에 클릭 이벤트 리스너를 추가
         document.querySelectorAll('.row button').forEach(button => {
             if (!button.id.startsWith('num')) return;
             button.addEventListener('click', onClickNumber);
         });
 
+        // 연산자 버튼 클릭 시 호출되는 함수
         const onClickOperator = (op) => () => {
-            if (!currentInput && op === '-') { // Allow negative numbers
+            if (!currentInput && op === '-') { // 음수 입력 허용
                 currentInput = '-';
                 $result.value = '-';
                 return;
@@ -83,7 +91,7 @@
 
             if (currentOperator && currentInput) {
                 calculate();
-                $result.value = previousResult; // Show result of previous calculation
+                $result.value = previousResult; // 이전 계산 결과를 표시
             } else if (!previousResult) {
                 previousResult = parseFloat(currentInput);
             }
@@ -91,14 +99,16 @@
             currentInput = '';
             currentOperator = op;
             $operator.value = op;
-            $result.value = previousResult.toString(); // Continue showing the last input instead of '0'
+            $result.value = previousResult.toString(); // 마지막 입력값을 계속 표시
         };
 
+        // 연산자 버튼들에 클릭 이벤트 리스너를 추가
         document.querySelector('#plus').addEventListener('click', onClickOperator('+'));
         document.querySelector('#minus').addEventListener('click', onClickOperator('-'));
         document.querySelector('#divide').addEventListener('click', onClickOperator('/'));
         document.querySelector('#multiply').addEventListener('click', onClickOperator('*'));
 
+        // '=' 버튼 클릭 시 호출되는 함수
         document.querySelector('#calculate').addEventListener('click', () => {
             if (currentInput) {
                 calculate();
@@ -106,9 +116,10 @@
             $result.value = previousResult;
             currentInput = '';
             currentOperator = null;
-            previousResult = 0;  // Reset after calculation
+            previousResult = 0;  // 계산 후 초기화
         });
 
+        // 'C' 버튼 클릭 시 호출되는 함수
         document.querySelector('#clear').addEventListener('click', () => {
             currentInput = '';
             previousResult = 0;
@@ -118,6 +129,5 @@
         });
 
     </script>
-    
 </body>
 </html>

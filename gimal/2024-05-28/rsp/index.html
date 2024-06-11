@@ -6,6 +6,7 @@
     <title>가위바위보</title>
 </head>
 <style>
+    /* 컴퓨터가 선택한 항목을 표시하는 영역의 스타일 */
     #computer {
         width: 165px;
         height: 200px;
@@ -13,29 +14,43 @@
     }
 </style>
 <body>
+    <!-- 컴퓨터가 선택한 가위, 바위, 보 이미지를 표시하는 영역 -->
     <div id="computer" style="background: url(&quot;./rsp.png&quot;) -440px 0px / auto 200px;"></div>
     <div>
+      <!-- 가위, 바위, 보 선택 버튼 -->
       <button id="scissors" class="btn">가위</button>
       <button id="rock" class="btn">바위</button>
       <button id="paper" class="btn">보</button>
     </div>
+    <!-- 게임 결과 및 점수를 표시하는 영역 -->
     <div id="score">0</div>
     <script>
+    // DOM 요소를 변수에 저장
     const $computer = document.querySelector('#computer'); 
     const $score = document.querySelector('#score');
     const $rock = document.querySelector('#rock');
     const $scissors = document.querySelector('#scissors'); 
     const $paper = document.querySelector('#paper');
+
+    // 이미지 파일 경로
     const IMG_URL = './rsp.png';
+
+    // 컴퓨터 선택 이미지 초기 설정
     $computer.style.background = `url(${IMG_URL}) 0 0`;
     $computer.style.backgroundSize = 'auto 200px';
+
+    // 가위, 바위, 보에 따른 이미지 위치 설정
     const rspX = { 
       scissors: '0', // 가위
       rock: '-220px', // 바위
       paper: '-440px', // 보
     };
+
+    // 컴퓨터의 현재 선택
     let computerChoice = 'scissors'; 
-    const changeComputerHand = () => { // 가위, 바위, 보 이미지 바꾸기
+
+    // 컴퓨터의 가위, 바위, 보 이미지를 주기적으로 변경하는 함수
+    const changeComputerHand = () => { 
       if (computerChoice === 'rock') { 
         computerChoice = 'scissors';
       } else if (computerChoice === 'scissors') { 
@@ -46,33 +61,38 @@
       $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
       $computer.style.backgroundSize = 'auto 200px';
     }
-    
+
+    // 50ms마다 changeComputerHand 함수를 실행하여 컴퓨터의 선택을 변경
     let intervalId = setInterval(changeComputerHand, 50);
-    // 가위: 1, 바위: 0, 보: -1
-    // 사용자\컴퓨터  가위  바위  보
-    // 가위             0    1    2
-    // 바위            -1    0    1
-    // 보              -2   -1    0
+
+    // 가위, 바위, 보에 따른 점수표
     const scoreTable = { 
       scissors: 1,
       rock: 0,
       paper: -1,
     };
-    
+
+    // 게임 진행 상태 변수
     let clickable = true;
     let userWins = 0;
     let computerWins = 0;
     const maxWins = 3;
+
+    // 사용자가 버튼을 클릭했을 때 실행되는 함수
     const clickButton = (event) => { 
       if (clickable && userWins < maxWins && computerWins < maxWins) {
-        clearInterval(intervalId); 
+        clearInterval(intervalId); // 컴퓨터의 선택 변경 중지
         clickable = false;
+
+        // 사용자가 선택한 항목
         const myChoice = event.target.textContent === '바위' ? 'rock' 
           : event.target.textContent === '가위' ? 'scissors' : 'paper';
         const myScore = scoreTable[myChoice];
         const computerScore = scoreTable[computerChoice]; 
         const diff = myScore - computerScore;
         let message;
+
+        // 승패 판단
         if ([2, -1].includes(diff)) {
           userWins += 1;
           message = '승리';
@@ -82,13 +102,17 @@
         } else {
           message = '무승부';
         }
+
+        // 점수 및 결과 출력
         $score.textContent = `${message} | 사용자: ${userWins}승, 컴퓨터: ${computerWins}승`;
         
+        // 최종 승자 확인
         if (userWins === maxWins) {
           $score.textContent += ' | 사용자 최종 승리!';
         } else if (computerWins === maxWins) {
           $score.textContent += ' | 컴퓨터 최종 승리!';
         } else {
+          // 1초 후에 게임 재개
           setTimeout(() => { 
             clickable = true;
             intervalId = setInterval(changeComputerHand, 50);
@@ -96,7 +120,8 @@
         }
       }
     };
-    
+
+    // 가위, 바위, 보 버튼에 클릭 이벤트 리스너 추가
     $rock.addEventListener('click', clickButton);
     $scissors.addEventListener('click', clickButton);
     $paper.addEventListener('click', clickButton);
