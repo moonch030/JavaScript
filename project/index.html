@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>이상형 월드컵</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 20px;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>이상형 월드컵</h1>
+    <h2 id="roundName"></h2>
+    <div id="match" class="container">
+        <!-- Match cards will be inserted here by JavaScript -->
+    </div>
+    
+    <script>
+        const contestants = [
+            { id: 1, name: '강호동', image: 'img/강호동.jpeg' },
+            { id: 2, name: '길', image: 'img/길.jpeg' },
+            { id: 3, name: '김영철', image: 'img/김영철.jpeg' },
+            { id: 4, name: '김우빈', image: 'img/김우빈.jpeg' },
+            { id: 5, name: '김종국', image: 'img/김종국.jpeg' },
+            { id: 6, name: '김희철', image: 'img/김희철.jpeg' },
+            { id: 7, name: '노홍철', image: 'img/노홍철.jpeg' },
+            { id: 8, name: '박명수', image: 'img/박명수.jpeg' },
+            { id: 9, name: '신동', image: 'img/신동.jpeg' },
+            { id: 10, name: '원빈', image: 'img/원빈.jpeg' },
+            { id: 11, name: '유재석', image: 'img/유재석.jpeg' },
+            { id: 12, name: '정형돈', image: 'img/정형돈.jpeg' },
+            { id: 13, name: '최우식', image: 'img/최우식.jpeg' },
+            { id: 14, name: '피오', image: 'img/피오.jpeg' },
+            { id: 15, name: '하하', image: 'img/하하.jpeg' },
+            { id: 16, name: '황광희', image: 'img/황광희.jpeg' }
+        ];
+
+        let currentRound = contestants.slice();
+        let nextRound = [];
+        let currentMatchIndex = 0;
+
+        function getRoundName(numContestants) {
+            switch (numContestants) {
+                case 2:
+                    return "결승전";
+                case 4:
+                    return "4강";
+                case 8:
+                    return "8강";
+                case 16:
+                    return "16강";
+                default:
+                    return `${numContestants}강`;
+            }
+        }
+
+        function updateRoundName() {
+            const roundName = getRoundName(currentRound.length);
+            document.getElementById('roundName').textContent = roundName;
+        }
+
+        function displayMatch() {
+            if (currentMatchIndex < currentRound.length - 1) {
+                updateRoundName();
+                const matchContainer = document.getElementById('match');
+                matchContainer.innerHTML = '';
+                
+                const contestant1 = currentRound[currentMatchIndex];
+                const contestant2 = currentRound[currentMatchIndex + 1];
+                
+                matchContainer.innerHTML = `
+                    <div class="card" id="contestant1">
+                        <h2>${contestant1.name}</h2>
+                        <img src="${contestant1.image}" alt="${contestant1.name}" />
+                        <button class="button" onclick="chooseWinner(${contestant1.id})">선택</button>
+                    </div>
+                    <div class="card" id="contestant2">
+                        <h2>${contestant2.name}</h2>
+                        <img src="${contestant2.image}" alt="${contestant2.name}" />
+                        <button class="button" onclick="chooseWinner(${contestant2.id})">선택</button>
+                    </div>
+                `;
+            } else {
+                if (nextRound.length === 1) {
+                    displayWinner(nextRound[0]);
+                } else {
+                    currentRound = nextRound.slice();
+                    nextRound = [];
+                    currentMatchIndex = 0;
+                    displayMatch();
+                }
+            }
+        }
+
+        function chooseWinner(id) {
+            const winner = currentRound.find(contestant => contestant.id === id);
+            nextRound.push(winner);
+            currentMatchIndex += 2;
+            displayMatch();
+        }
+
+        function displayWinner(winner) {
+            document.getElementById('roundName').textContent = "최종 승자";
+            document.getElementById('match').innerHTML = `
+                <div class="card">
+                    <img src="${winner.image}" alt="${winner.name}" />
+                    <h2>${winner.name}</h2>
+                </div>
+            `;
+        }
+
+        updateRoundName();
+        displayMatch();
+    </script>
+</body>
+</html>
