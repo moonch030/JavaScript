@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>끝말잇기</title>
+</head>
+<body>
+    <h1>끝말잇기 게임</h1>
+    <div><span id="order">1</span>번째 참가자의 차례입니다.</div>
+    <div>제시어:<span id="word"></span></div>
+    <input type="text" id="input-word" placeholder="단어를 입력하세요">
+    <button class="btn" onclick="submitWord()">입력</button>
+    <script>
+        let number = parseInt(prompt("몇 명이 참가하나요?")); // 참가자 수 입력 받기
+        let currentOrder = 1; // 현재 참가자 번호
+        let word = prompt("시작할 제시어를 입력하세요."); // 초기 제시어 설정
+        document.getElementById('word').textContent = word; // 초기 제시어 화면에 표시
+
+        function submitWord() {
+            const inputWord = document.getElementById('input-word').value; // 입력된 단어 가져오기
+            if (!inputWord) {
+                alert("단어를 입력하세요.");
+                return;
+            }
+            if (inputWord[0] === word[word.length - 1]) { // 제시어의 마지막 글자와 입력 단어의 첫 글자 비교
+                word = inputWord; // 제시어 업데이트
+                document.getElementById('word').textContent = word;
+                document.getElementById('input-word').value = ''; // 입력 필드 초기화
+                currentOrder = currentOrder % number + 1; // 다음 참가자
+                document.getElementById('order').textContent = currentOrder; // 참가자 번호 업데이트
+            } else {
+                alert("게임 오버! " + inputWord + "은(는) 제시어 " + word + "의 마지막 글자와 일치하지 않습니다.");
+                document.getElementById('input-word').disabled = true; // 입력 비활성화
+                document.querySelector('.btn').disabled = true; // 버튼 비활성화
+            }
+        }
+    </script>
+</body>
+</html>

@@ -38,20 +38,15 @@
         <button id="multiply">x</button>
     </div>
     <script>
-        // 계산기의 현재 입력값을 저장하는 변수
-        let currentInput = ''; 
-        // 이전 계산 결과를 저장하는 변수
-        let previousResult = 0; 
-        // 현재 연산자를 저장하는 변수
-        let currentOperator = null; 
-        // 연산자와 결과를 표시하는 DOM 요소들을 가져옴
-        const $operator = document.querySelector('#operator'); 
-        const $result = document.querySelector('#result');
+        let currentInput = ''; // 현재 입력된 숫자를 문자열로 저장
+        let previousResult = 0; // 이전 계산 결과를 저장
+        let currentOperator = null; // 현재 선택된 연산자를 저장
+        const $operator = document.querySelector('#operator'); // 연산자를 표시할 입력 필드
+        const $result = document.querySelector('#result'); // 결과를 표시할 입력 필드
 
-        // 계산을 수행하는 함수
         const calculate = () => {
-            let numTwo = parseFloat(currentInput);
-            switch (currentOperator) {
+            let numTwo = parseFloat(currentInput); // 현재 입력된 숫자를 부동소수점 숫자로 변환
+            switch (currentOperator) { // 현재 연산자에 따라 적절한 연산 수행
                 case '+':
                     previousResult += numTwo;
                     break;
@@ -69,21 +64,18 @@
             }
         };
 
-        // 숫자 버튼 클릭 시 호출되는 함수
         const onClickNumber = (event) => {
-            currentInput += event.target.textContent;
-            $result.value = currentInput;
+            currentInput += event.target.textContent; // 클릭된 버튼의 텍스트를 현재 입력에 추가
+            $result.value = currentInput; // 결과 입력 필드에 현재 입력 표시
         };
 
-        // 모든 숫자 버튼에 클릭 이벤트 리스너를 추가
         document.querySelectorAll('.row button').forEach(button => {
-            if (!button.id.startsWith('num')) return;
-            button.addEventListener('click', onClickNumber);
+            if (!button.id.startsWith('num')) return; // 숫자 버튼이 아니면 리턴
+            button.addEventListener('click', onClickNumber); // 숫자 버튼에 클릭 이벤트 리스너 추가
         });
 
-        // 연산자 버튼 클릭 시 호출되는 함수
         const onClickOperator = (op) => () => {
-            if (!currentInput && op === '-') { // 음수 입력 허용
+            if (!currentInput && op === '-') { // 음수 입력을 위한 특별 케이스
                 currentInput = '-';
                 $result.value = '-';
                 return;
@@ -91,41 +83,38 @@
 
             if (currentOperator && currentInput) {
                 calculate();
-                $result.value = previousResult; // 이전 계산 결과를 표시
+                $result.value = previousResult; // 계산 결과 표시
             } else if (!previousResult) {
-                previousResult = parseFloat(currentInput);
+                previousResult = parseFloat(currentInput); // 처음 연산자 클릭 시 이전 결과에 현재 입력 저장
             }
 
             currentInput = '';
-            currentOperator = op;
-            $operator.value = op;
-            $result.value = previousResult.toString(); // 마지막 입력값을 계속 표시
+            currentOperator = op; // 선택된 연산자 저장
+            $operator.value = op; // 연산자 필드에 연산자 표시
+            $result.value = previousResult.toString(); // 결과 필드에 현재 결과 표시
         };
 
-        // 연산자 버튼들에 클릭 이벤트 리스너를 추가
         document.querySelector('#plus').addEventListener('click', onClickOperator('+'));
         document.querySelector('#minus').addEventListener('click', onClickOperator('-'));
         document.querySelector('#divide').addEventListener('click', onClickOperator('/'));
         document.querySelector('#multiply').addEventListener('click', onClickOperator('*'));
 
-        // '=' 버튼 클릭 시 호출되는 함수
         document.querySelector('#calculate').addEventListener('click', () => {
             if (currentInput) {
                 calculate();
             }
-            $result.value = previousResult;
+            $result.value = previousResult; // 최종 결과 표시
             currentInput = '';
             currentOperator = null;
-            previousResult = 0;  // 계산 후 초기화
+            previousResult = 0; // 모든 변수 초기화
         });
 
-        // 'C' 버튼 클릭 시 호출되는 함수
         document.querySelector('#clear').addEventListener('click', () => {
             currentInput = '';
             previousResult = 0;
             currentOperator = null;
             $operator.value = '';
-            $result.value = '0';
+            $result.value = '0'; // 모든 입력 및 결과 필드 초기화
         });
 
     </script>
