@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">  <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- 반응형 웹 디자인을 위한 viewport 설정 -->
-    <title>로또</title>  <!-- 웹페이지의 제목을 "로또"로 설정 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또</title>
     <style>
-        /* 공의 스타일 설정 */
         .ball {
             display: inline-block;
             border-radius: 50%;
@@ -17,7 +16,6 @@
             font-weight: bold;
             margin-right: 10px;
         }
-        /* 공의 색상 설정 */
         .red { background-color: red; }
         .orange { background-color: orange; }
         .yellow { background-color: yellow; color: black; }
@@ -26,74 +24,61 @@
     </style>
 </head>
 <body>
-    <!-- 사용자 입력을 받는 폼 -->
     <form id="form">
         <input name="input" placeholder="숫자 6개를 쉼표로 구분해 입력하세요.">
         <button type="submit">추첨</button><br><br>
     </form>
-    <!-- 당첨 번호와 보너스 번호를 표시할 영역 -->
     <div id="result">당첨 숫자: </div>
     <div id="bonus">보너스 숫자: </div>
+    <div id="matches">맞춘 숫자: </div>
     <script>
-        // DOM 요소들을 변수에 저장
         const $form = document.querySelector('#form'); 
         const $result = document.querySelector('#result');
         const $bonus = document.querySelector('#bonus');
+        const $matches = document.querySelector('#matches');
         const $button = $form.querySelector('button');
         
-        // 번호를 공 모양으로 그리는 함수
         function drawBall(number, $parent) {
             const $ball = document.createElement('div');
             $ball.className = 'ball';
-            if (number < 10) {
-                $ball.classList.add('red');
-            } else if (number < 20) {
-                $ball.classList.add('orange');
-            } else if (number < 30) {
-                $ball.classList.add('yellow');
-            } else if (number < 40) {
-                $ball.classList.add('blue');
-            } else {
-                $ball.classList.add('green');
-            }
+            if (number < 10) { $ball.classList.add('red'); }
+            else if (number < 20) { $ball.classList.add('orange'); }
+            else if (number < 30) { $ball.classList.add('yellow'); }
+            else if (number < 40) { $ball.classList.add('blue'); }
+            else { $ball.classList.add('green'); }
             $ball.textContent = number;
             $parent.appendChild($ball);
         }
         
-        // 주어진 밀리초(ms) 후에 Promise를 해결하는 함수
-        const setTimeoutPromise = (ms) => new Promise((resolve) => {
-            setTimeout(resolve, ms);
-        });
+        const setTimeoutPromise = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         
-        // 추첨을 시작하는 비동기 함수
         async function startDraw() {
-            $button.disabled = true; // 버튼 비활성화
+            $button.disabled = true;
             const string = $form.input.value; 
             const myNumbers = string.split(',').map((v) => parseInt(v.trim()));
-            const candidate = Array(45).fill().map((v, i) => i + 1);  // 1부터 45까지의 숫자 배열 생성
+            const candidate = Array(45).fill().map((v, i) => i + 1);
             const shuffle = [];
             while (candidate.length > 0) {
                 const random = Math.floor(Math.random() * candidate.length);
                 shuffle.push(candidate.splice(random, 1)[0]);
             }
-            const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b);  // 당첨 번호 6개 추첨 및 정렬
-            const bonus = shuffle[6];  // 보너스 번호 추첨
+            const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b);
+            const bonus = shuffle[6];
             $result.textContent = '당첨 숫자: ';
             $bonus.textContent = '보너스 숫자: ';
             for (let i = 0; i < winBalls.length; i++) {
-                await setTimeoutPromise(1000);  // 1초 대기
-                drawBall(winBalls[i], $result);  // 당첨 번호 공 그리기
+                await setTimeoutPromise(1000);
+                drawBall(winBalls[i], $result);
             }
-            await setTimeoutPromise(1000);  // 1초 대기
-            drawBall(bonus, $bonus);  // 보너스 번호 공 그리기
-            await setTimeoutPromise(0);
-            checkWin(myNumbers, winBalls, bonus);  // 당첨 여부 확인
-            $button.disabled = false; // 버튼 활성화
+            await setTimeoutPromise(1000);
+            drawBall(bonus, $bonus);
+            checkWin(myNumbers, winBalls, bonus);
+            $button.disabled = false;
         }
 
-        // 당첨 여부를 확인하는 함수
         function checkWin(myNumbers, winBalls, bonus) {
             let count = myNumbers.filter(num => winBalls.includes(num)).length;
+            $matches.textContent = `맞춘 숫자: ${count}`;
             if (count === 6) {
                 alert('1등! 현실 로또 당첨될 운을 여기에 쓰시다니...');
             } else if (count === 5 && myNumbers.includes(bonus)) {
@@ -109,7 +94,6 @@
             }
         }
 
-        // 폼 제출 시 추첨을 시작하는 이벤트 리스너 추가
         $form.addEventListener('submit', async (event) => {
             event.preventDefault();
             await startDraw();
