@@ -12,7 +12,7 @@
 </head>
 <body>
     <input readonly="" id="operator">
-    <input readonly="" type="text" id="result">
+    <input readonly="" type="text" id="result"> <!-- 숫자 입력과 연산을 보여주기 위해 type을 "text"로 변경 -->
     <div class="row">
         <button id="num-7">7</button>
         <button id="num-8">8</button>
@@ -41,6 +41,7 @@
         let currentInput = ''; // 현재 입력된 숫자를 문자열로 저장
         let previousResult = 0; // 이전 계산 결과를 저장
         let currentOperator = null; // 현재 선택된 연산자를 저장
+        let fullExpression = ''; // 전체 수식을 표시할 문자열
         const $operator = document.querySelector('#operator'); // 연산자를 표시할 입력 필드
         const $result = document.querySelector('#result'); // 결과를 표시할 입력 필드
 
@@ -57,21 +58,17 @@
                     previousResult *= numTwo;
                     break;
                 case '/':
-                    if (numTwo === 0) {
-                        $result.value = 'Error'; // 0으로 나누기 오류 처리
-                        return;
-                    }
                     previousResult /= numTwo;
                     break;
                 default:
                     return;
             }
-            $result.value = previousResult; // 계산 결과 표시
         };
 
         const onClickNumber = (event) => {
             currentInput += event.target.textContent; // 클릭된 버튼의 텍스트를 현재 입력에 추가
-            $result.value = currentInput; // 결과 입력 필드에 현재 입력 표시
+            fullExpression += event.target.textContent; // 전체 수식에 추가
+            $result.value = fullExpression; // 결과 입력 필드에 전체 수식 표시
         };
 
         document.querySelectorAll('.row button').forEach(button => {
@@ -80,16 +77,26 @@
         });
 
         const onClickOperator = (op) => () => {
+            if (!currentInput && op === '-') { // 음수 입력을 위한 특별 케이스
+                currentInput = '-';
+                fullExpression += '-';
+                $result.value = fullExpression;
+                return;
+            }
+
             if (currentOperator && currentInput) {
                 calculate();
-            } else if (!previousResult && currentInput) {
+            }
+
+            if (!previousResult && currentInput) {
                 previousResult = parseFloat(currentInput); // 처음 연산자 클릭 시 이전 결과에 현재 입력 저장
             }
 
             currentInput = '';
             currentOperator = op; // 선택된 연산자 저장
             $operator.value = op; // 연산자 필드에 연산자 표시
-            $result.value = op; // 결과 필드에 연산자 표시
+            fullExpression += ` ${op} `; // 전체 수식에 연산자 추가
+            $result.value = fullExpression; // 결과 필드에 전체 수식 표시
         };
 
         document.querySelector('#plus').addEventListener('click', onClickOperator('+'));
@@ -102,9 +109,9 @@
                 calculate();
             }
             $result.value = previousResult; // 최종 결과 표시
+            fullExpression = '';
             currentInput = '';
             currentOperator = null;
-            $operator.value = ''; // 연산자 필드 초기화
             previousResult = 0; // 모든 변수 초기화
         });
 
@@ -114,6 +121,7 @@
             currentOperator = null;
             $operator.value = '';
             $result.value = '0'; // 모든 입력 및 결과 필드 초기화
+            fullExpression = '';
         });
 
     </script>

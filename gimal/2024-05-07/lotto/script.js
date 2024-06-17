@@ -13,6 +13,8 @@ while(lotto.length < 6) {
 
 // 로또 번호를 오름차순으로 정렬
 lotto.sort((a, b) => a - b); 
+// 로또 번호를 내림차순으로 정렬
+// lotto.sort((a, b) => b - a); 
 
 // 정렬된 로또 번호를 HTML에 출력
 document.write("<div class='ball ball1'>" + lotto[0] + "</div>");
